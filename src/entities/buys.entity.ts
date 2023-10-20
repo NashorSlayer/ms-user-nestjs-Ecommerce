@@ -1,9 +1,9 @@
-import { Buys } from "./buys.entity"
+import { Cart } from "./cart.entity"
 
-export class Cart {
+export class Buys {
     id: string
     productId: string
     amount: number
     image: string
-    Buys: Buys[]
+    Cart: Cart
 }

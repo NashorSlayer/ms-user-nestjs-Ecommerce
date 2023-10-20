@@ -1,3 +1,5 @@
+import { Cart } from "./cart.entity"
+import { ShoppingHistory } from "./shoppingHistory.entity"
 
 export class User {
     email: string

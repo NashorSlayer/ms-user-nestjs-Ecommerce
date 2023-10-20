@@ -1,5 +1,3 @@
-import { Cart, ShoppingHistory } from "@prisma/client"
-
 export class CreateUserDto {
     email: string
     address: string
@@ -7,6 +5,5 @@ export class CreateUserDto {
     lastName: string
     firstName: string
     image: string
-    ShoppingHistory: ShoppingHistory[]
-    Cart: Cart
+    cartId: string
 }

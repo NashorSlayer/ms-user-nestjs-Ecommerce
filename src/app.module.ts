@@ -1,20 +1,34 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './modules/user/user.module';
-import { ShoppingHistoryModule } from './modules/shopping-history/shopping-history.module';
-import { CartModule } from './modules/cart/cart.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/user.module';
+import { AuthModule, BuyModule, CartModule, ShoppingHistoryModule, UserModule } from './modules';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
     imports: [
+        ClientsModule.register([
+            {
+                name: 'USER_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: [process.env.RABBITMQ_URL],
+                    queue: process.env.RMQ_QUEUE,
+                    queueOptions: {
+                        durable: false
+                    },
+                },
+            }
+        ]),
+
         ConfigModule.forRoot({
             envFilePath: '.env',
         }),
+        PrismaModule,
         UserModule,
         AuthModule,
         CartModule,
         ShoppingHistoryModule,
+        BuyModule,
     ],
     controllers: [],
     providers: [],

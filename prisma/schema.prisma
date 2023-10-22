@@ -35,7 +35,6 @@ model Cart {
   id        String @id @default(uuid())
   productId String
   amount    Float
-  image     String
   Buys      Buys[]
 
   User User?

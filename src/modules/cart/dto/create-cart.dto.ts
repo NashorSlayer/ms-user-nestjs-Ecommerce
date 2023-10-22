@@ -1,3 +1,7 @@
-export class CreateCartDto {
 
+
+export class CreateCartDto {
+    amount: number
+    buysIds: string[]
+    userId: string
 }

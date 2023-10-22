@@ -3,3 +3,7 @@
 
 npm install bcrypt
 npm i --save-dev @types/bcrypt
+
+
+#install RabbitMQ
+npm i --save amqplib amqp-connection-manager

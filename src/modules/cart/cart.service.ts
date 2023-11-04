@@ -10,26 +10,43 @@ export class CartService {
     private prisma: PrismaService
   ) { }
 
-  //create a cart 
   async create(createCartDto: CreateCartDto) {
-    return console.log("hola mundo")
-
-
+    return await this.prisma.cart.create({
+      data: {
+        productId: createCartDto.productId,
+        amount: createCartDto.amount
+      }
+    })
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    return await this.prisma.user.findMany();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} cart`;
+  async findOne(id: string) {
+    return await this.prisma.cart.findFirst({
+      where: { id: id }
+    })
   }
 
-  update(id: string, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
+  async update(id: string, updateCartDto: UpdateCartDto) {
+    return await this.prisma.cart.update({
+      where: { id: id },
+      data: {
+        amount: updateCartDto.amount
+      }
+    });
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} cart`;
+  async removeProductsFromCart(id: string, productId: string) {
+    return await this.prisma.cart.delete({
+      where: { id: id, productId: productId },
+    });
+  }
+
+  async remove(id: string) {
+    return await this.prisma.cart.delete({
+      where: { id: id },
+    });
   }
 }

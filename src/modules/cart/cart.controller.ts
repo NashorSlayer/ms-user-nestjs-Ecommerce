@@ -2,33 +2,40 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CartMsg } from 'src/utils/constants';
 
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) { }
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @MessagePattern(CartMsg.CREATE)
+  async create(@Payload() createCartDto: CreateCartDto) {
+    return await this.cartService.create(createCartDto);
   }
 
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @MessagePattern(CartMsg.FIND_ALL)
+  async findAll() {
+    return await this.cartService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(id);
+  @MessagePattern(CartMsg.FIND_ONE)
+  async findOne(@Payload() id: string) {
+    return await this.cartService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(id, updateCartDto);
+  @MessagePattern(CartMsg.UPDATE)
+  async update(@Payload() id: string, updateCartDto: UpdateCartDto) {
+    return await this.cartService.update(id, updateCartDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(id);
+  @MessagePattern(CartMsg.DELETE_PRODUCT)
+  async removeProductsFromCart(@Payload() id: string, productId: string) {
+    return await this.cartService.removeProductsFromCart(id, productId);
+  }
+
+  @MessagePattern(CartMsg.DELETE)
+  async remove(@Payload() id: string) {
+    return await this.cartService.remove(id);
   }
 }

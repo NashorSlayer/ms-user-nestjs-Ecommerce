@@ -1,9 +1,10 @@
-import { Cart } from "./cart.entity"
+import { User } from "./user.entity"
 
 export class Buys {
     id: string
     productId: string
     amount: number
-    image: string
-    Cart: Cart
+    quantity: number
+    date: Date
+    User: User
 }

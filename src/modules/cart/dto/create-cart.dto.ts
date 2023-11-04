@@ -1,7 +1,4 @@
-
-
 export class CreateCartDto {
+    productId: string
     amount: number
-    buysIds: string[]
-    userId: string
 }

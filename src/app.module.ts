@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule, BuyModule, CartModule, ShoppingHistoryModule, UserModule } from './modules';
+import { AuthModule, BuyModule, CartModule, UserModule } from './modules';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PrismaModule } from './prisma/prisma.module';
 
@@ -27,7 +27,6 @@ import { PrismaModule } from './prisma/prisma.module';
         UserModule,
         AuthModule,
         CartModule,
-        ShoppingHistoryModule,
         BuyModule,
     ],
     controllers: [],

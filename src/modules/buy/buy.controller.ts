@@ -2,33 +2,35 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BuyService } from './buy.service';
 import { CreateBuyDto } from './dto/create-buy.dto';
 import { UpdateBuyDto } from './dto/update-buy.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { BuystMsg } from 'src/utils/constants';
 
 @Controller('buy')
 export class BuyController {
   constructor(private readonly buyService: BuyService) { }
 
-  @Post()
-  create(@Body() createBuyDto: CreateBuyDto) {
-    return this.buyService.create(createBuyDto);
+  @MessagePattern(BuystMsg.CREATE)
+  async create(@Payload() createBuyDto: CreateBuyDto) {
+    return await this.buyService.create(createBuyDto);
   }
 
-  @Get()
-  findAll() {
-    return this.buyService.findAll();
+  @MessagePattern(BuystMsg.FIND_ALL)
+  async findAll() {
+    return await this.buyService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.buyService.findOne(id);
+  @MessagePattern(BuystMsg.FIND_ONE)
+  async findOne(@Payload() id: string) {
+    return await this.buyService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBuyDto: UpdateBuyDto) {
-    return this.buyService.update(id, updateBuyDto);
+  @MessagePattern(BuystMsg.UPDATE)
+  async update(@Payload() id: string, updateBuyDto: UpdateBuyDto) {
+    return await this.buyService.update(id, updateBuyDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.buyService.remove(id);
+  @MessagePattern(BuystMsg.DELETE)
+  async remove(@Payload() id: string) {
+    return await this.buyService.remove(id);
   }
 }

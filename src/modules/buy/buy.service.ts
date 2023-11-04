@@ -17,7 +17,7 @@ export class BuyService {
         quantity: createBuyDto.quantity,
         amount: createBuyDto.amount,
         date: createBuyDto.date,
-        cartId: createBuyDto.cartId
+        userId: createBuyDto.userId
       }
     });
   }
@@ -32,6 +32,12 @@ export class BuyService {
     });
   }
 
+  async findAllByUserId(userId: string) {
+    return await this.prisma.buys.findMany({
+      where: { userId: userId }
+    });
+  }
+
   async update(id: string, updateBuyDto: UpdateBuyDto) {
     return await this.prisma.buys.update({
       where: { id: id },
@@ -43,6 +49,8 @@ export class BuyService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} buy`;
+    return this.prisma.buys.delete({
+      where: { id: id }
+    });
   }
 }

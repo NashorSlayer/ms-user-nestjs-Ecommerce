@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { BcryptService } from '../auth/bcrypt.service';
 
+
 @Injectable()
 export class UserService {
 
@@ -18,7 +19,7 @@ export class UserService {
     const password = await this.bcrypt.encriptarContrasena(createUserDto.password);
 
     // create user
-    return this.prisma.user.create({
+    return await this.prisma.user.create({
       data: {
         email: createUserDto.email,
         password: password,
@@ -32,8 +33,8 @@ export class UserService {
   }
 
   //search all users
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    return await this.prisma.user.findMany();
   }
 
   //search by id
@@ -52,12 +53,16 @@ export class UserService {
 
   //update user
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.prisma.user.update({
+
+    // encrypt password
+    const password = await this.bcrypt.encriptarContrasena(updateUserDto.password);
+
+    return await this.prisma.user.update({
       where: { id: id },
       data: {
         email: updateUserDto.email,
         firstName: updateUserDto.firstName,
-        password: await this.bcrypt.encriptarContrasena(updateUserDto.password),
+        password: password,
         lastName: updateUserDto.lastName,
         address: updateUserDto.address,
         image: updateUserDto.image
@@ -65,7 +70,9 @@ export class UserService {
     });
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    return await this.prisma.user.delete({
+      where: { id: id }
+    });
   }
 }

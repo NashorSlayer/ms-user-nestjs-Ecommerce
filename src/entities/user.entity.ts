@@ -1,5 +1,5 @@
+import { Buys } from "./buys.entity"
 import { Cart } from "./cart.entity"
-import { ShoppingHistory } from "./shoppingHistory.entity"
 
 export class User {
     email: string
@@ -8,6 +8,6 @@ export class User {
     lastName: string
     firstName: string
     image: string
-    ShoppingHistory: ShoppingHistory[]
     Cart: Cart
+    Buys: Buys[]
 }

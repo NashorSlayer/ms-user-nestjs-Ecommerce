@@ -6,8 +6,7 @@ import { UserService } from '../user/user.service';
 import { BcryptService } from './bcrypt.service';
 import { JwtModule } from '@nestjs/jwt';
 import { CartModule } from '../cart/cart.module';
-import { CartService } from '../cart/cart.service';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../../prisma/prisma.module';
 
 @Module({
   imports: [

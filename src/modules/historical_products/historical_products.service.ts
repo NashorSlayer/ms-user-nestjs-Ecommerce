@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHistoricalProductDto } from './dto/create-historical_product.dto';
 import { UpdateHistoricalProductDto } from './dto/update-historical_product.dto';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class HistoricalProductsService {
-  create(createHistoricalProductDto: CreateHistoricalProductDto) {
-    return 'This action adds a new historicalProduct';
+
+  constructor(
+    private readonly prismaService: PrismaService
+  ) { }
+
+  async create(createHistoricalProductDto: CreateHistoricalProductDto) {
+    return await this.prismaService.historical_products.create({
+      data: {
+        productId: createHistoricalProductDto.productId,
+        amount: createHistoricalProductDto.amount,
+        Historical: {
+          connect: {
+            id: createHistoricalProductDto.historicalId
+          }
+        }
+      }
+    });
   }
 
   findAll() {
-    return `This action returns all historicalProducts`;
+    return this.prismaService.historical_products.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} historicalProduct`;
+  async findOne(id: string) {
+    return await this.prismaService.historical_products.findUnique({
+      where: { id: id }
+    });
   }
 
-  update(id: number, updateHistoricalProductDto: UpdateHistoricalProductDto) {
-    return `This action updates a #${id} historicalProduct`;
+  async update(id: string, updateHistoricalProductDto: UpdateHistoricalProductDto) {
+    return await this.prismaService.historical_products.update({
+      where: { id: id },
+      data: {
+        amount: updateHistoricalProductDto.amount
+      }
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} historicalProduct`;
+  async remove(id: string) {
+    return await this.prismaService.historical_products.delete({
+      where: { id: id }
+    });
   }
 }

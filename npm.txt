@@ -14,3 +14,7 @@ npm i --save @nestjs/jwt
 
 #install RabbitMQ
 npm i --save amqplib amqp-connection-manager
+
+#test 
+npm i --save-dev @nestjs/testing
+

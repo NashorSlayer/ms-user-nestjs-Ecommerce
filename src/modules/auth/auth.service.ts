@@ -12,6 +12,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly bcryptService: BcryptService,
+    private readonly cartService: CartService,
     private jwtService: JwtService,
   ) { }
 
@@ -43,20 +44,18 @@ export class AuthService {
     //encrypt password
     const password = await this.bcryptService.encriptarContrasena(RegisterUserDto.password);
 
+    //create cart
+    const cart = await this.cartService.create();
+
     //create user
-
-
-    // const newUser = await this.userService.create({
-    //   email: RegisterUserDto.email,
-    //   password: password,
-    //   firstName: RegisterUserDto.firstName,
-    //   lastName: RegisterUserDto.lastName,
-    // });
+    await this.userService.create({
+      email: RegisterUserDto.email,
+      password: password,
+      firstName: RegisterUserDto.firstName,
+      lastName: RegisterUserDto.lastName,
+      cartId: cart.id
+    })
 
     return HttpStatus.CREATED;
-  }
-
-  async logout() {
-    return "body";
   }
 }

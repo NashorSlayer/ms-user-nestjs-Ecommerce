@@ -23,11 +23,10 @@ export class UserService {
       data: {
         email: createUserDto.email,
         password: password,
-        address: createUserDto.address,
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
         Cart: {
-
+          connect: { id: createUserDto.cartId }
         }
       }
     });

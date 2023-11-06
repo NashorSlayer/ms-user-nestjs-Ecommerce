@@ -1,32 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { HistoricalService } from './historical.service';
+import { HistoricalMsg } from 'src/utils/constants';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('historical')
 export class HistoricalController {
   constructor(private readonly historicalService: HistoricalService) { }
 
-  @Post()
-  create(@Body() createHistoricalDto: string) {
-    return this.historicalService.create(createHistoricalDto);
+  @MessagePattern(HistoricalMsg.CREATE)
+  create() {
+    return this.historicalService.create();
   }
 
-  @Get()
+  @MessagePattern(HistoricalMsg.FIND_ALL)
   findAll() {
     return this.historicalService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.historicalService.findOne(+id);
+  @MessagePattern(HistoricalMsg.FIND_ONE)
+  findOne(@Payload() id: string) {
+    return this.historicalService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoricalDto: string) {
-    return this.historicalService.update(+id, updateHistoricalDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.historicalService.remove(+id);
+  @MessagePattern(HistoricalMsg.DELETE)
+  remove(@Payload() id: string) {
+    return this.historicalService.remove(id);
   }
 }

@@ -26,6 +26,7 @@ export enum HistoricalMsg {
 
 export enum Historical_productMsg {
     CREATE = 'CREATE_HISTORICAL_PRODUCT',
+    UPDATE = 'UPDATE_CART_PRODUCT',
     FIND_ALL = 'FIND_HISTORICAL_PRODUCTS',
     FIND_ONE = 'FIND_HISTORICAL_PRODUCT',
     DELETE = 'DELETE_HISTORICAL_PRODUCT',
@@ -33,6 +34,7 @@ export enum Historical_productMsg {
 
 export enum Cart_productMsg {
     CREATE = 'CREATE_CART_PRODUCT',
+    UPDATE = 'UPDATE_CART_PRODUCT',
     FIND_ALL = 'FIND_CART_PRODUCTS',
     FIND_ONE = 'FIND_CART_PRODUCT',
     DELETE = 'DELETE_CART_PRODUCT',

@@ -23,12 +23,15 @@ model User {
 }
 
 model Cart {
-  id   String @id @default(uuid())
-  User User?
+  id       String          @id @default(uuid())
+  User     User?
+  products Cart_products[]
 }
 
 model Historical {
   id String @id @default(uuid())
+
+  products Historical_products[]
 }
 
 model Cart_products {
@@ -36,11 +39,14 @@ model Cart_products {
   productId String
   cartId    String
   amount    Int
+  Cart      Cart   @relation(fields: [cartId], references: [id])
 }
 
 model Historical_products {
-  id           String @id @default(uuid())
+  id           String     @id @default(uuid())
   productId    String
   historicalId String
   amount       Int
+  date         DateTime
+  Historical   Historical @relation(fields: [historicalId], references: [id])
 }

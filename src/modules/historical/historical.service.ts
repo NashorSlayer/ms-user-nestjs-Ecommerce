@@ -1,24 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class HistoricalService {
-  create(createHistoricalDto: string) {
-    return 'This action adds a new historical';
+
+  constructor(
+    private prismaService: PrismaService,
+  ) { }
+
+  async create() {
+    return await this.prismaService.historical.create({});
   }
 
-  findAll() {
-    return `This action returns all historical`;
+  async findAll() {
+    return await this.prismaService.historical.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} historical`;
+  async findOne(id: string) {
+    return await this.prismaService.historical.findUnique({
+      where: { id: id },
+    });
   }
 
-  update(id: number, updateHistoricalDto: string) {
-    return `This action updates a #${id} historical`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} historical`;
+  async remove(id: string) {
+    return await this.prismaService.historical.delete({
+      where: { id: id },
+    });
   }
 }

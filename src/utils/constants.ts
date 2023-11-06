@@ -14,17 +14,34 @@ export enum CartMsg {
     CREATE = 'CREATE_CART',
     FIND_ALL = 'FIND_CARTS',
     FIND_ONE = 'FIND_CART',
-    UPDATE = 'UPDATE_CART',
     DELETE = 'DELETE_CART',
-    DELETE_PRODUCT = 'DELETE_PRODUCT',
 }
 
-export enum BuystMsg {
-    CREATE = 'CREATE_BUY',
-    FIND_ALL = 'FIND_BUYS',
-    FIND_ONE = 'FIND_BUY',
-    UPDATE = 'UPDATE_BUY',
-    DELETE = 'DELETE_BUY',
+export enum HistoricalMsg {
+    CREATE = 'CREATE_HISTORICAL',
+    FIND_ALL = 'FIND_HISTORICALS',
+    FIND_ONE = 'FIND_HISTORICAL',
+    DELETE = 'DELETE_HISTORICAL',
+}
+
+export enum Historical_productMsg {
+    CREATE = 'CREATE_HISTORICAL_PRODUCT',
+    FIND_ALL = 'FIND_HISTORICAL_PRODUCTS',
+    FIND_ONE = 'FIND_HISTORICAL_PRODUCT',
+    DELETE = 'DELETE_HISTORICAL_PRODUCT',
+}
+
+export enum Cart_productMsg {
+    CREATE = 'CREATE_CART_PRODUCT',
+    FIND_ALL = 'FIND_CART_PRODUCTS',
+    FIND_ONE = 'FIND_CART_PRODUCT',
+    DELETE = 'DELETE_CART_PRODUCT',
+}
+
+export enum AuthMsg {
+    LOGIN = 'LOGIN',
+    REGISTER = 'REGISTER',
+    LOGOUT = 'LOGOUT',
 }
 
 

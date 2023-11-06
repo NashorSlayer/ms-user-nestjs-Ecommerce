@@ -9,6 +9,8 @@ npm i --save @nestjs/microservices
 npm install bcrypt
 npm i --save-dev @types/bcrypt
 
+#install jwt
+npm i --save @nestjs/jwt
 
 #install RabbitMQ
 npm i --save amqplib amqp-connection-manager

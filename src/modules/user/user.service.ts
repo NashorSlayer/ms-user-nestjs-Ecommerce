@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { BcryptService } from '../auth/bcrypt.service';
 
 
@@ -26,8 +26,9 @@ export class UserService {
         address: createUserDto.address,
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
-        image: createUserDto.image,
-        cartId: createUserDto.cartId
+        Cart: {
+
+        }
       }
     });
   }

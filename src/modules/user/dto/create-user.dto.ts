@@ -4,6 +4,4 @@ export class CreateUserDto {
     password: string
     lastName: string
     firstName: string
-    image: string
-    cartId: string
 }

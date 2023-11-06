@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { UserService } from '../user/user.service';
+import { BcryptService } from './bcrypt.service';
+import { JwtService } from '@nestjs/jwt';
+import { CartService } from '../cart/cart.service';
+
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly userService: UserService,
+    private readonly bcryptService: BcryptService,
+    private jwtService: JwtService,
+  ) { }
+
+  async login(LoginUserDto: LoginUserDto) {
+
+    //verifico las credenciales
+    const user = await this.userService.findOneByEmail(LoginUserDto.email);
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+    const isPasswordValid = await this.bcryptService.verificarContrasena(LoginUserDto.password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Contraseña incorrecta");
+    }
+    //genero el token
+    const payload = { userId: user.id, email: user.email };
+
+    //lo devuelvo
+    const token = this.jwtService.sign(payload);
+    return { access_token: token };
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async register(RegisterUserDto: RegisterUserDto) {
+    //verifico que no exista el usuario
+    const user = await this.userService.findOneByEmail(RegisterUserDto.email);
+    if (user) {
+      throw new Error("Usuario ya existe");
+    }
+    //encrypt password
+    const password = await this.bcryptService.encriptarContrasena(RegisterUserDto.password);
+
+    //create user
+
+
+    // const newUser = await this.userService.create({
+    //   email: RegisterUserDto.email,
+    //   password: password,
+    //   firstName: RegisterUserDto.firstName,
+    //   lastName: RegisterUserDto.lastName,
+    // });
+
+    return HttpStatus.CREATED;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async logout() {
+    return "body";
   }
 }

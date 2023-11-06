@@ -20,22 +20,27 @@ model User {
   image     String?
   Cart      Cart    @relation(fields: [cartId], references: [id])
   cartId    String  @unique
-  Buys      Buys[]
 }
 
 model Cart {
-  id        String @id @default(uuid())
-  productId String
-  amount    Float
-  User      User?
+  id   String @id @default(uuid())
+  User User?
 }
 
-model Buys {
-  id        String   @id @default(uuid())
+model Historical {
+  id String @id @default(uuid())
+}
+
+model Cart_products {
+  id        String @id @default(uuid())
   productId String
-  amount    Float
-  quantity  Int
-  date      DateTime @default(now())
-  User      User     @relation(fields: [userId], references: [id])
-  userId    String
+  cartId    String
+  amount    Int
+}
+
+model Historical_products {
+  id           String @id @default(uuid())
+  productId    String
+  historicalId String
+  amount       Int
 }

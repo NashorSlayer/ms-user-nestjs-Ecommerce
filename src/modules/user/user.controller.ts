@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserMsg } from 'src/utils/constants';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from 'src/entities';
 
 @Controller('user')
 export class UserController {

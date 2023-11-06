@@ -1,34 +1,27 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { AuthMsg } from 'src/utils/constants';
+import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @MessagePattern(AuthMsg.LOGIN)
+  async login(@Payload() LoginUserDto: LoginUserDto) {
+    return await this.authService.login(LoginUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @MessagePattern(AuthMsg.REGISTER)
+  async register(@Payload() RegisterUserDto: RegisterUserDto) {
+    return await this.authService.register(RegisterUserDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @MessagePattern(AuthMsg.LOGOUT)
+  async logout(@Payload() id: string) {
+    return await this.authService.logout();
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
 }

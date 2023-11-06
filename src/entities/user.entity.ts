@@ -1,4 +1,3 @@
-import { Buys } from "./buys.entity"
 import { Cart } from "./cart.entity"
 
 export class User {
@@ -9,5 +8,4 @@ export class User {
     firstName: string
     image: string
     Cart: Cart
-    Buys: Buys[]
 }

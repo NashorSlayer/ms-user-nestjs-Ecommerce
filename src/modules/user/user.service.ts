@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { BcryptService } from '../auth/bcrypt.service';
+import { User } from '../../entities';
 
 
 @Injectable()
@@ -10,19 +11,15 @@ export class UserService {
 
   constructor(
     private prisma: PrismaService,
-    private bcrypt: BcryptService,
   ) { }
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
 
-    // encrypt password
-    const password = await this.bcrypt.encriptarContrasena(createUserDto.password);
 
-    // create user
-    return await this.prisma.user.create({
+    const newUser = await this.prisma.user.create({
       data: {
         email: createUserDto.email,
-        password: password,
+        password: createUserDto.password,
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
         Cart: {
@@ -30,39 +27,42 @@ export class UserService {
         }
       }
     });
+
+    return await this.findOne(newUser.id);
+
   }
 
   //search all users
-  async findAll() {
-    return await this.prisma.user.findMany();
+  async findAll(): Promise<User[]> {
+    return this.prisma.user.findMany({ include: { Cart: true } });
   }
 
   //search by id
-  async findOne(id: string) {
+  async findOne(id: string): Promise<User> {
     return await this.prisma.user.findUnique({
-      where: { id: id }
+      where: { id: id },
+      include: { Cart: true }
     });
   }
 
   //search user by email
-  async findOneByEmail(email: string) {
+  async findOneByEmail(email: string): Promise<User> {
     return await this.prisma.user.findUnique({
-      where: { email: email }
+      where: { email: email },
+      include: { Cart: true }
     });
   }
 
   //update user
-  async update(id: string, updateUserDto: UpdateUserDto) {
-
-    // encrypt password
-    const password = await this.bcrypt.encriptarContrasena(updateUserDto.password);
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
 
     return await this.prisma.user.update({
       where: { id: id },
+      include: { Cart: true },
       data: {
         email: updateUserDto.email,
         firstName: updateUserDto.firstName,
-        password: password,
+        password: updateUserDto.password,
         lastName: updateUserDto.lastName,
         address: updateUserDto.address,
         image: updateUserDto.image
@@ -70,9 +70,10 @@ export class UserService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<User> {
     return await this.prisma.user.delete({
-      where: { id: id }
+      where: { id: id },
+      include: { Cart: true }
     });
   }
 }

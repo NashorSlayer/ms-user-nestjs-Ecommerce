@@ -43,7 +43,6 @@ export enum Cart_productMsg {
 export enum AuthMsg {
     LOGIN = 'LOGIN',
     REGISTER = 'REGISTER',
-    LOGOUT = 'LOGOUT',
 }
 
 

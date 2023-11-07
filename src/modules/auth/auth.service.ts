@@ -35,24 +35,26 @@ export class AuthService {
     return { access_token: token };
   }
 
-  async register(RegisterUserDto: RegisterUserDto) {
+  async register(registerUserDto: RegisterUserDto) {
+
+    console.log("dto_ register:", registerUserDto)
     //verifico que no exista el usuario
-    const user = await this.userService.findOneByEmail(RegisterUserDto.email);
+    const user = await this.userService.findOneByEmail(registerUserDto.email);
     if (user) {
       throw new Error("Usuario ya existe");
     }
     //encrypt password
-    const password = await this.bcryptService.encriptarContrasena(RegisterUserDto.password);
+    const password = await this.bcryptService.encriptarContrasena(registerUserDto.password);
 
     //create cart
     const cart = await this.cartService.create();
 
     //create user
     await this.userService.create({
-      email: RegisterUserDto.email,
+      email: registerUserDto.email,
       password: password,
-      firstName: RegisterUserDto.firstName,
-      lastName: RegisterUserDto.lastName,
+      firstName: registerUserDto.firstName,
+      lastName: registerUserDto.lastName,
       cartId: cart.id
     })
 

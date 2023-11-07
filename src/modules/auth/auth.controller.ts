@@ -19,9 +19,4 @@ export class AuthController {
     return await this.authService.register(RegisterUserDto);
   }
 
-  @MessagePattern(AuthMsg.LOGOUT)
-  async logout(@Payload() id: string) {
-    return await this.authService.logout();
-  }
-
 }

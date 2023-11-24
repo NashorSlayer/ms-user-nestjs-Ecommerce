@@ -24,9 +24,6 @@ export class AuthService {
     if (!user) {
       throw new Error("Usuario no encontrado");
     }
-    console.log("user:", user)
-    console.log("LoginUserDto:", LoginUserDto)
-    console.log("validPassword", await this.bcryptService.compare(LoginUserDto.password, user.password))
 
     const isPasswordValid = await this.bcryptService.compare(LoginUserDto.password, user.password);
     if (!isPasswordValid) {

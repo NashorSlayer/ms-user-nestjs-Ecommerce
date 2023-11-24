@@ -32,12 +32,10 @@ export class UserService {
 
   }
 
-  //search all users
   async findAll(): Promise<User[]> {
     return this.prisma.user.findMany({ include: { Cart: true } });
   }
 
-  //search by id
   async findOne(id: string): Promise<User> {
     return await this.prisma.user.findUnique({
       where: { id: id },
@@ -45,7 +43,6 @@ export class UserService {
     });
   }
 
-  //search user by email
   async findOneByEmail(email: string): Promise<User> {
     return await this.prisma.user.findUnique({
       where: { email: email },
@@ -53,7 +50,6 @@ export class UserService {
     });
   }
 
-  //update user
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
 
     return await this.prisma.user.update({

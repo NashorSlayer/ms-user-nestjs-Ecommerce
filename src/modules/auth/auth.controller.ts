@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AuthMsg } from 'src/utils/constants';
@@ -17,6 +17,11 @@ export class AuthController {
   @MessagePattern(AuthMsg.REGISTER)
   async register(@Payload() RegisterUserDto: RegisterUserDto) {
     return await this.authService.register(RegisterUserDto);
+  }
+
+  @MessagePattern(AuthMsg.PROFILE)
+  async profile(@Payload() idUser: string) {
+    return await this.authService.getProfile(idUser)
   }
 
 }

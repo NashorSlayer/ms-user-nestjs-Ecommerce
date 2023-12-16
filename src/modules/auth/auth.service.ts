@@ -1,10 +1,11 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, UseGuards } from '@nestjs/common';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CartService } from '../cart/cart.service';
 import { BcryptService } from './bcrypt.service';
+import { User } from 'src/entities';
 
 
 @Injectable()
@@ -62,4 +63,13 @@ export class AuthService {
       cartId: cart.id
     });
   }
+
+  //@UseGuards(Auht)
+  async getProfile(idUser: string): Promise<User> {
+    const user = await this.userService.findOne(idUser)
+    return user
+  }
+
+
+
 }

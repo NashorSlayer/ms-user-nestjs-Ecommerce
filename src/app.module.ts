@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule, CartModule, UserModule } from './modules';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -38,4 +38,10 @@ import { HistoricalProductsModule } from './modules/historical_products/historic
     providers: [],
 })
 
-export class AppModule { }
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer
+            .apply()
+            .forRoutes('*');
+    }
+}

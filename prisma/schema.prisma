@@ -18,20 +18,25 @@ model User {
   lastName  String
   firstName String
   image     String?
-  Cart      Cart    @relation(fields: [cartId], references: [id])
-  cartId    String  @unique
+
+  Cart   Cart   @relation(fields: [cartId], references: [id])
+  cartId String @unique
+
+  Historical   Historical @relation(fields: [historicalId], references: [id])
+  historicalId String     @unique
 }
 
 model Cart {
   id       String          @id @default(uuid())
+  isEmpty  Boolean         @default(true)
   User     User?
   products Cart_products[]
 }
 
 model Historical {
-  id String @id @default(uuid())
-
+  id       String                @id @default(uuid())
   products Historical_products[]
+  User     User?
 }
 
 model Cart_products {
@@ -44,9 +49,8 @@ model Cart_products {
 
 model Historical_products {
   id           String     @id @default(uuid())
-  productId    String
+  orderBuyId   String
   historicalId String
-  amount       Int
   date         DateTime
   Historical   Historical @relation(fields: [historicalId], references: [id])
 }

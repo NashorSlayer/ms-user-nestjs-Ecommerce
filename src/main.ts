@@ -4,7 +4,7 @@ import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {
-    logger: ['error', 'warn', 'debug', 'verbose'],
+    logger: [],
     transport: Transport.RMQ,
     options: {
       urls: [process.env.RMQ_URL],

@@ -1,5 +1,8 @@
+import { Cart } from ".";
+
 export class Cart_products {
-    cartId: string;
+    id: string;
+    Cart: Cart;
     productId: string;
     amount: number;
 }

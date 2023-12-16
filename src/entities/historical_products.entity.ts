@@ -1,6 +1,7 @@
+import { Historical } from ".";
+
 export class Historical_products {
-    historicalId: string;
-    productId: string;
-    amount: number;
+    orderBuyId: string;
     date: Date;
+    historical: Historical
 }

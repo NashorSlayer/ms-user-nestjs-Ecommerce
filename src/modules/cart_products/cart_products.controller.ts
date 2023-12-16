@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Param } from '@nestjs/common';
 import { CartProductsService } from './cart_products.service';
 import { CreateCartProductDto } from './dto/create-cart_product.dto';
 import { UpdateCartProductDto } from './dto/update-cart_product.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CartMsg, Cart_productMsg } from 'src/utils/constants';
+import { Cart_productMsg } from 'src/utils/constants';
 
 @Controller('cart-products')
 export class CartProductsController {
@@ -17,6 +17,11 @@ export class CartProductsController {
   @MessagePattern(Cart_productMsg.FIND_ALL)
   findAll() {
     return this.cartProductsService.findAll();
+  }
+
+  @MessagePattern(Cart_productMsg.GETPRODUCTSBYCART)
+  getCartByProducts(@Param('cart_id') cartid: string) {
+    return this.cartProductsService.getCartByProducts(cartid);
   }
 
   @MessagePattern(Cart_productMsg.FIND_ONE)

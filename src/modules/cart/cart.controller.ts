@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CartMsg } from 'src/utils/constants';
+import { UpdateCart } from './dto/update-cart.dto';
 
 @Controller('cart')
 export class CartController {
@@ -20,6 +21,11 @@ export class CartController {
   @MessagePattern(CartMsg.FIND_ONE)
   async findOne(@Payload() id: string) {
     return await this.cartService.findOne(id);
+  }
+
+  @MessagePattern(CartMsg.UPDATE)
+  async update(@Payload() id: string, updateCartDto: UpdateCart) {
+    return await this.cartService.update(id, updateCartDto);
   }
 
   @MessagePattern(CartMsg.DELETE)

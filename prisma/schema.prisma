@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model users {
   id        String  @id @default(uuid())
   email     String  @unique
   address   String?
@@ -19,38 +19,38 @@ model User {
   firstName String
   image     String?
 
-  Cart   Cart   @relation(fields: [cartId], references: [id])
+  Cart   carts  @relation(fields: [cartId], references: [id])
   cartId String @unique
 
-  Historical   Historical @relation(fields: [historicalId], references: [id])
-  historicalId String     @unique
+  Historical   historicals @relation(fields: [historicalId], references: [id])
+  historicalId String      @unique
 }
 
-model Cart {
+model carts {
   id       String          @id @default(uuid())
   isEmpty  Boolean         @default(true)
-  User     User?
-  products Cart_products[]
+  User     users?
+  products cart_products[]
 }
 
-model Historical {
+model historicals {
   id       String                @id @default(uuid())
-  products Historical_products[]
-  User     User?
+  products historical_products[]
+  User     users?
 }
 
-model Cart_products {
+model cart_products {
   id        String @id @default(uuid())
   productId String
   cartId    String
   amount    Int
-  Cart      Cart   @relation(fields: [cartId], references: [id])
+  Cart      carts  @relation(fields: [cartId], references: [id])
 }
 
-model Historical_products {
-  id           String     @id @default(uuid())
+model historical_products {
+  id           String      @id @default(uuid())
   orderBuyId   String
   historicalId String
   date         DateTime
-  Historical   Historical @relation(fields: [historicalId], references: [id])
+  Historical   historicals @relation(fields: [historicalId], references: [id])
 }

@@ -10,7 +10,9 @@ export class CartService {
     private prisma: PrismaService
   ) { }
   async create(): Promise<Cart> {
-    return await this.prisma.carts.create({})
+    return await this.prisma.carts.create({
+      data: {}
+    })
   }
 
   async findAll(): Promise<Cart[]> {

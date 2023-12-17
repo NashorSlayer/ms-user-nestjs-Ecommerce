@@ -9,7 +9,9 @@ export class HistoricalService {
   ) { }
 
   async create() {
-    return await this.prismaService.historicals.create({});
+    return await this.prismaService.historicals.create({
+      data: {}
+    });
   }
 
   async findAll() {

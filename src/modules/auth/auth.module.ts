@@ -7,11 +7,14 @@ import { BcryptService } from './bcrypt.service';
 import { JwtModule } from '@nestjs/jwt';
 import { CartModule } from '../cart/cart.module';
 import { PrismaModule } from '../../prisma/prisma.module';
+import { HistoricalModule } from '../historical/historical.module';
+import { HistoricalService } from '../historical/historical.service';
 
 @Module({
   imports: [
     UserModule,
     CartModule,
+    HistoricalModule,
     PrismaModule,
     JwtModule.register({
       global: true,
@@ -20,6 +23,6 @@ import { PrismaModule } from '../../prisma/prisma.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UserService, BcryptService],
+  providers: [AuthService, UserService, BcryptService, HistoricalService],
 })
 export class AuthModule { }

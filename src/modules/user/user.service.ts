@@ -48,7 +48,11 @@ export class UserService {
   async findOne(id: string): Promise<User> {
     return await this.prisma.users.findUnique({
       where: { id: id },
-      include: { Cart: true, Historical: true }
+      include:
+      {
+        Cart: true,
+        Historical: true
+      }
     });
   }
 

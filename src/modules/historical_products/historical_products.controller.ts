@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { HistoricalProductsService } from './historical_products.service';
 import { CreateHistoricalProductDto } from './dto/create-historical_product.dto';
 import { UpdateHistoricalProductDto } from './dto/update-historical_product.dto';

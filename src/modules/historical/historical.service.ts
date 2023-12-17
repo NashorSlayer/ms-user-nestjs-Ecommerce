@@ -9,21 +9,21 @@ export class HistoricalService {
   ) { }
 
   async create() {
-    return await this.prismaService.historical.create({});
+    return await this.prismaService.historicals.create({});
   }
 
   async findAll() {
-    return await this.prismaService.historical.findMany();
+    return await this.prismaService.historicals.findMany();
   }
 
   async findOne(id: string) {
-    return await this.prismaService.historical.findUnique({
+    return await this.prismaService.historicals.findUnique({
       where: { id: id },
     });
   }
 
   async remove(id: string) {
-    return await this.prismaService.historical.delete({
+    return await this.prismaService.historicals.delete({
       where: { id: id },
     });
   }

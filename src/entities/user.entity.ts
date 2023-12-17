@@ -1,4 +1,4 @@
-import { Cart } from "./cart.entity"
+import { Cart, Historical } from "."
 
 export class User {
     email: string
@@ -7,5 +7,7 @@ export class User {
     lastName: string
     firstName: string
     image: string
+
     Cart: Cart
+    Historical: Historical
 }

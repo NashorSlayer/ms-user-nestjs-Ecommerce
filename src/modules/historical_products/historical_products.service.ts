@@ -11,10 +11,13 @@ export class HistoricalProductsService {
   ) { }
 
   async create(createHistoricalProductDto: CreateHistoricalProductDto) {
+
+    const date = new Date();
+
     return await this.prismaService.historical_products.create({
       data: {
-        productId: createHistoricalProductDto.productId,
-        amount: createHistoricalProductDto.amount,
+        orderBuyId: createHistoricalProductDto.orderBuyId,
+        date: date,
         Historical: {
           connect: {
             id: createHistoricalProductDto.historicalId
@@ -30,7 +33,10 @@ export class HistoricalProductsService {
 
   async findOne(id: string) {
     return await this.prismaService.historical_products.findUnique({
-      where: { id: id }
+      where: { id: id },
+      include: {
+        Historical: true
+      }
     });
   }
 
@@ -38,14 +44,17 @@ export class HistoricalProductsService {
     return await this.prismaService.historical_products.update({
       where: { id: id },
       data: {
-        amount: updateHistoricalProductDto.amount
+        date: updateHistoricalProductDto.date,
       }
     });
   }
 
   async remove(id: string) {
     return await this.prismaService.historical_products.delete({
-      where: { id: id }
+      where: { id: id },
+      include: {
+        Historical: true
+      }
     });
   }
 }

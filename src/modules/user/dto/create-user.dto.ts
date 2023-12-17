@@ -1,7 +1,10 @@
+import { Cart, Historical } from "src/entities"
+
 export class CreateUserDto {
     email: string
     password: string
     lastName: string
     firstName: string
-    cartId: string
+    Cart: Cart
+    Historical: Historical
 }

@@ -19,11 +19,11 @@ model users {
   firstName String
   image     String?
 
-  Cart   carts  @relation(fields: [cartId], references: [id])
-  cartId String @unique
+  Cart    carts  @relation(fields: [cart_id], references: [id])
+  cart_id String @unique
 
-  Historical   historicals @relation(fields: [historicalId], references: [id])
-  historicalId String      @unique
+  Historical    historicals @relation(fields: [historical_id], references: [id])
+  historical_id String      @unique
 }
 
 model carts {
@@ -40,17 +40,17 @@ model historicals {
 }
 
 model cart_products {
-  id        String @id @default(uuid())
-  productId String
-  cartId    String
-  amount    Int
-  Cart      carts  @relation(fields: [cartId], references: [id])
+  id         String @id @default(uuid())
+  product_id String
+  cart_id    String
+  amount     Int
+  Cart       carts  @relation(fields: [cart_id], references: [id])
 }
 
 model historical_products {
-  id           String      @id @default(uuid())
-  orderBuyId   String
-  historicalId String
-  date         DateTime
-  Historical   historicals @relation(fields: [historicalId], references: [id])
+  id            String      @id @default(uuid())
+  order_buy_id  String
+  historical_id String
+  date          DateTime
+  Historical    historicals @relation(fields: [historical_id], references: [id])
 }

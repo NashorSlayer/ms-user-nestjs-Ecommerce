@@ -12,22 +12,27 @@ export class CartProductsService {
   ) { }
 
   async create(createCartProductDto: CreateCartProductDto): Promise<Cart_products> {
-    try {
-      return await this.prisma.cart_products.create({
-        data: {
-          amount: createCartProductDto.amount,
-          Cart: {
-            connect: {
-              id: createCartProductDto.Cart.id
-            }
-          },
-          productId: createCartProductDto.productId
-        }
-      });
-    } catch (err) {
-      console.log(err);
+    const response = await this.prisma.cart_products.create({
+      data: {
+        amount: createCartProductDto.amount,
+        Cart: {
+          connect: {
+            id: createCartProductDto.cart_id
+          }
+        },
+        product_id: createCartProductDto.product_id
+      },
+      include: {
+        Cart: true
+      }
+    });
+    if (!response.Cart) {
+      console.log("no se creo el carrito");
+      return;
     }
+    return response;
   }
+
 
   findAll(): Promise<Cart_products[]> {
     return this.prisma.cart_products.findMany(
@@ -41,21 +46,31 @@ export class CartProductsService {
 
   async findOne(id: string): Promise<Cart_products> {
     return await this.prisma.cart_products.findUnique({
-      where: { id: id }
+      where: { id: id },
+      include: {
+        Cart: true
+      }
     });
   }
 
   async getCartByProducts(cartId: string): Promise<Cart_products[]> {
     return await this.prisma.cart_products.findMany({
-      where: { cartId: cartId }
+      where: { cart_id: cartId },
+      include: {
+        Cart: true
+      }
     });
   }
 
   async update(id: string, updateCartProductDto: UpdateCartProductDto): Promise<Cart_products> {
+
     return await this.prisma.cart_products.update({
       where: { id: id },
       data: {
         amount: updateCartProductDto.amount
+      },
+      include: {
+        Cart: true
       }
     });
   }

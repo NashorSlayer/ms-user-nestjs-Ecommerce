@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { historicals } from '@prisma/client';
 
 @Injectable()
 export class HistoricalService {
@@ -8,23 +9,23 @@ export class HistoricalService {
     private prismaService: PrismaService,
   ) { }
 
-  async create() {
+  async create(): Promise<historicals> {
     return await this.prismaService.historicals.create({
       data: {}
     });
   }
 
-  async findAll() {
+  async findAll(): Promise<historicals[]> {
     return await this.prismaService.historicals.findMany();
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<historicals> {
     return await this.prismaService.historicals.findUnique({
       where: { id: id },
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<historicals> {
     return await this.prismaService.historicals.delete({
       where: { id: id },
     });

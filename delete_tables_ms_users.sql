@@ -1,5 +1,5 @@
-drop table  if exists public."Cart"  cascade;
-drop table  if exists public."User" cascade;
-drop table  if exists public."Historical" cascade;
-drop table  if exists public."Historical_products" cascade;
-drop table  if exists public."Cart_products" cascade;
+drop table  if exists public."historical_products" cascade;
+drop table  if exists public."cart_products" cascade;
+drop table  if exists public."carts"  cascade;
+drop table  if exists public."historicals" cascade;
+drop table  if exists public."users" cascade;

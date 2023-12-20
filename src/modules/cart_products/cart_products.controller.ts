@@ -30,12 +30,14 @@ export class CartProductsController {
   }
 
   @MessagePattern(Cart_productMsg.UPDATE)
-  update(@Payload() id: string, updateCartProductDto: UpdateCartProductDto) {
+  update(@Payload('id') id: string, @Payload('cart_products') updateCartProductDto: UpdateCartProductDto) {
     return this.cartProductsService.update(id, updateCartProductDto);
   }
 
   @MessagePattern(Cart_productMsg.DELETE)
-  remove(@Param('id') id: string) {
+  remove(@Payload() id: string) {
     return this.cartProductsService.remove(id);
   }
 }
+
+

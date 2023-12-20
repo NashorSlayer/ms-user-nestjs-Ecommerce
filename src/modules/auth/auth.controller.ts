@@ -19,9 +19,9 @@ export class AuthController {
     return await this.authService.register(RegisterUserDto);
   }
 
-  @MessagePattern(AuthMsg.PROFILE)
-  async profile(@Payload() idUser: string) {
-    return await this.authService.getProfile(idUser)
-  }
+  // @MessagePattern(AuthMsg.PROFILE)
+  // async profile(@Payload() idUser: string) {
+  //   return await this.authService.getProfile(idUser)
+  // }
 
 }

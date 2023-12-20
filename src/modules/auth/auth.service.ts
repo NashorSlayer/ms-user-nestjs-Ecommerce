@@ -72,9 +72,9 @@ export class AuthService {
     });
   }
 
-  //@UseGuards(Auht)
-  async getProfile(idUser: string): Promise<User> {
-    const user = await this.userService.findOne(idUser)
-    return user
-  }
+  // //@UseGuards(Auht)
+  // async getProfile(idUser: string): Promise<User> {
+  //   const user = await this.userService.findOne(idUser)
+  //   return user
+  // }
 }

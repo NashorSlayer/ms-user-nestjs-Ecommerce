@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { User } from '../../entities';
+import { User } from 'src/entities';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
 
 
-    const newUser = await this.prisma.users.create({
+    const response = await this.prisma.users.create({
       data: {
         email: createUserDto.email,
         password: createUserDto.password,
@@ -27,11 +27,22 @@ export class UserService {
         Historical: {
           connect: { id: createUserDto.Historical.id }
         }
+      },
+      include: {
+        Cart: true,
+        Historical: true
       }
     });
+    if (!response.Cart) {
+      console.log("No se creo el carrito");
+      return;
+    }
+    if (!response.Historical) {
+      console.log("No se creo el historial");
+      return;
+    }
 
-    return await this.findOne(newUser.id);
-
+    return response;
   }
 
   async findAll(): Promise<User[]> {
@@ -86,12 +97,30 @@ export class UserService {
   }
 
   async remove(id: string): Promise<User> {
-    return await this.prisma.users.delete({
+
+    const user = this.findOne(id);
+    if (!user) {
+      console.log("No se encontro el usuario");
+      return;
+    }
+
+    await this.prisma.users.delete({
       where: { id: id },
       include: {
         Cart: true,
-        Historical: true
-      }
+        Historical: true,
+      },
     });
+
+    await this.prisma.carts.delete({
+      where: { id: (await user).Cart.id },
+    });
+
+    await this.prisma.historicals.delete({
+      where: { id: (await user).Historical.id },
+    });
+
+    return user;
+
   }
 }

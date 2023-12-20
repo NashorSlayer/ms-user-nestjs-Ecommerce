@@ -1,7 +1,7 @@
-import { Cart } from "src/entities";
+
 
 export class CreateCartProductDto {
-    productId: string;
+    product_id: string;
     amount: number;
-    Cart: Cart
+    cart_id: string
 }

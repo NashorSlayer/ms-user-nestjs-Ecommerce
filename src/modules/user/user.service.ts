@@ -7,6 +7,7 @@ import { User } from 'src/entities';
 
 @Injectable()
 export class UserService {
+  bcryptService: any;
 
   constructor(
     private prisma: PrismaService,
@@ -86,10 +87,6 @@ export class UserService {
         Historical: true
       },
       data: {
-        email: updateUserDto.email,
-        firstName: updateUserDto.firstName,
-        password: updateUserDto.password,
-        lastName: updateUserDto.lastName,
         address: updateUserDto.address,
         image: updateUserDto.image
       }

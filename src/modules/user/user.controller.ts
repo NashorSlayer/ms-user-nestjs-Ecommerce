@@ -20,17 +20,17 @@ export class UserController {
   }
 
   @MessagePattern(UserMsg.FIND_ONE)
-  async findOne(@Payload() id: string) {
+  async findOne(@Payload('id') id: string) {
     return await this.userService.findOne(id);
   }
 
   @MessagePattern(UserMsg.UPDATE)
-  async update(@Payload() id: string, updateUserDto: UpdateUserDto) {
+  async update(@Payload('id') id: string, updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
   }
 
   @MessagePattern(UserMsg.DELETE)
-  async remove(@Payload() id: string) {
+  async remove(@Payload('id') id: string) {
     return await this.userService.remove(id);
   }
 }

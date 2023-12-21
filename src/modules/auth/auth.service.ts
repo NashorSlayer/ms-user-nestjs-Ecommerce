@@ -37,7 +37,7 @@ export class AuthService {
     const payload = { user: user };
 
     //lo devuelvo
-    const token = this.jwtService.sign(payload);
+    const token = this.jwtService.sign(payload, { expiresIn: '1h' });
 
     return { user: user, access_token: token };
   }
